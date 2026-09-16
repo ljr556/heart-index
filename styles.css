@@ -220,8 +220,8 @@ h1 em {
 .state-card:hover, .scene-card:hover { border-color: rgba(217, 75, 106, 0.45); }
 
 .state-card .emoji { font-size: 26px; display: block; margin-bottom: 8px; }
-.state-card .name { font-size: 14px; font-weight: 700; }
-.state-card .sub { font-size: 11px; color: var(--ink-soft); margin-top: 4px; line-height: 1.6; }
+.state-card .name { display: block; font-size: 13.5px; font-weight: 700; }
+.state-card .sub { display: block; font-size: 10.5px; color: var(--ink-soft); margin-top: 5px; line-height: 1.55; }
 
 .states + .quote { margin-top: 4px; }
 
