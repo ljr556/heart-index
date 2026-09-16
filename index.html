@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#fdf3f4" />
+  <meta name="description" content="心动指数 · 30 道题测出你对 TA 的真实在意程度，含 12 种关系场景与专属解读。" />
+  <title>心动指数 · 你对 TA 的心动指数</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='78' font-size='80'%3E%E2%9D%A4%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand"><span class="dot"></span>心动指数</div>
+      <div class="top-actions">
+        <button class="icon-btn" id="themeBtn" title="切换深浅色">◐</button>
+        <button class="icon-btn" id="historyBtn" title="测试记录">☰</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- ========== 首页 ========== -->
+      <section class="page" id="page-home">
+        <div class="hero">
+          <div class="kicker">HEARTBEAT INDEX</div>
+          <div class="heart-ring"><span>♥</span></div>
+          <h1>你对 TA 的<br /><em>心动指数</em></h1>
+          <p class="lede">别急着用理智掩饰<br />30 道题，戳破你嘴硬不肯认的真心</p>
+        </div>
+
+        <div class="section-label">先选一个你们现在的状态</div>
+        <div class="states" id="stateList"></div>
+
+        <blockquote class="quote">测完你就知道，有没有想象中那么在意 TA。</blockquote>
+
+        <div class="chips">
+          <span><b>30</b> 道题</span>
+          <span><b>5</b> 个维度</span>
+          <span><b>12</b> 种场景</span>
+          <span><b>3</b> 分钟</span>
+        </div>
+
+        <button class="cta" id="startBtn">开始测试</button>
+        <p class="foot dim">结果仅供自我觉察，不作为心理诊断依据 · 数据只存在你自己的浏览器里</p>
+      </section>
+
+      <!-- ========== 场景选择 ========== -->
+      <section class="page hidden" id="page-scene">
+        <button class="back" id="sceneBack">← 换一个关系状态</button>
+        <h2 class="page-title" id="sceneTitle">选择你们的场景</h2>
+        <p class="lede small" id="sceneSub"></p>
+        <div class="scenes" id="sceneList"></div>
+        <p class="foot dim">不同场景会用各自的文案解读同一份答案</p>
+      </section>
+
+      <!-- ========== 答题 ========== -->
+      <section class="page hidden" id="page-quiz">
+        <div class="quiz-head">
+          <button class="icon-btn back-btn" id="quizBack" title="上一题">←</button>
+          <div class="progress"><i id="progressFill"></i></div>
+          <div class="counter" id="quizCount">01 / 30</div>
+        </div>
+        <div class="q-kicker" id="qKicker">HEARTBEAT INDEX · 心动强度</div>
+        <div class="q-text" id="qText"></div>
+        <div class="options" id="optionList"></div>
+        <p class="quiz-foot dim">键盘 1–5 快速作答 · 按 ← 返回上一题</p>
+      </section>
+
+      <!-- ========== 计算中 ========== -->
+      <section class="page hidden center" id="page-loading">
+        <div class="loading-heart">♥</div>
+        <div class="loading-text" id="loadingText">正在生成你的心动报告…</div>
+        <div class="loading-bar"><i id="loadingFill"></i></div>
+      </section>
+
+      <!-- ========== 结果 ========== -->
+      <section class="page hidden" id="page-result">
+        <div class="result-top" id="resultTop"></div>
+        <div class="card score-card">
+          <div class="ring-wrap">
+            <svg class="ring" viewBox="0 0 120 120">
+              <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="ring-fg" id="ringFg" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div class="ring-center">
+              <div class="ring-num" id="scoreNum">0</div>
+              <div class="ring-unit">心动指数</div>
+            </div>
+          </div>
+          <div class="ring-side" id="tierInfo"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">五个维度</div>
+          <div class="radar-wrap"><svg id="radar" viewBox="-10 -10 220 220"></svg></div>
+          <div class="dim-list" id="dimList"></div>
+        </div>
+
+        <div class="card advice-card">
+          <div class="card-title">给你的解读</div>
+          <div class="advice" id="adviceText"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">接下来可以做的三件事</div>
+          <ol class="actions" id="actionList"></ol>
+        </div>
+
+        <div class="result-actions">
+          <button class="cta" id="cardBtn">生成分享卡片</button>
+          <button class="ghost" id="copyBtn">复制结果文字</button>
+          <button class="ghost" id="againBtn">重新测一次</button>
+        </div>
+        <p class="foot dim">结果仅供自我觉察，不作为心理诊断依据</p>
+      </section>
+    </main>
+  </div>
+
+  <!-- 记录抽屉 -->
+  <div class="sheet hidden" id="historySheet">
+    <div class="sheet-head">
+      <span>测试记录</span>
+      <button class="icon-btn" data-close="historySheet">✕</button>
+    </div>
+    <div class="sheet-body" id="historyBody"></div>
+  </div>
+
+  <!-- 卡片抽屉 -->
+  <div class="sheet hidden" id="cardSheet">
+    <div class="sheet-head">
+      <span>分享卡片</span>
+      <button class="icon-btn" data-close="cardSheet">✕</button>
+    </div>
+    <div class="sheet-body center">
+      <img id="cardImage" alt="心动指数结果卡片" />
+      <p class="dim small">手机长按图片保存 · 电脑点下面的按钮下载</p>
+      <a class="cta as-link" id="cardDownload" download="心动指数.png">下载图片</a>
+    </div>
+  </div>
+
+  <div class="toast-layer" id="toastLayer"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
